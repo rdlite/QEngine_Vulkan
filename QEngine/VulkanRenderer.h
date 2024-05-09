@@ -22,6 +22,10 @@ private:
 	VkQueue _presentationQueue = nullptr;
 	VkSurfaceKHR _surface = nullptr;
 	VkDebugUtilsMessengerEXT _debugMessenger = nullptr;
+	VkSwapchainKHR _swapchain = nullptr;
+	VkFormat _swapchainImageFormat;
+	VkExtent2D _swapchainExtent;
+	std::vector<SwapchainImage> _swapchainImages;
 
 #ifdef NDEBUG
 	const bool _enableValidationLayers = false;
@@ -42,9 +46,18 @@ private:
 	void _populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
 	void _createLogicalDevice();
 	void _createSurface();
+	void _createSwapchain();
 	bool _checkInstanceExtensionsSupport(std::vector<const char*>* checkExtensions);
 	bool _checkDeviceSuitable(VkPhysicalDevice device);
 	bool _checkValidationLayerSupport();
+	bool _checkDeviceExtensionSupport(VkPhysicalDevice device);
+
 	QueueFamilyIndicies _getQueueFamilies(VkPhysicalDevice device);
 	std::vector<const char*> _getRequiredExtensions();
+	SwapchainDetails _getSwapchainDetails(VkPhysicalDevice device);
+	VkImageView _createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags);
+
+	VkSurfaceFormatKHR _chooseSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &formats);
+	VkPresentModeKHR _choosePresentMode(const std::vector<VkPresentModeKHR> &presentationMods);
+	VkExtent2D _chooseSwapExtent(const VkSurfaceCapabilitiesKHR &surfaceCapabilities);
 };
