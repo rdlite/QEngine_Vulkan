@@ -16,34 +16,37 @@
     <Filter Include="Header Files\QEngine">
       <UniqueIdentifier>{6e83e403-76e4-46de-acee-3ea39f1af22c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Debug">
-      <UniqueIdentifier>{7bf3d412-787e-4e2f-9f15-cf6938a9cb5a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\QEngine\Debug">
       <UniqueIdentifier>{7b79bea0-7a42-448e-9c4f-91c6167d5b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\QEngine\VkRender">
+      <UniqueIdentifier>{e898a7ba-3749-4a0f-a65c-a0204557b73f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\QEngine">
+      <UniqueIdentifier>{1b4135c0-f095-4da2-8112-449f74b1dd0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\QEngine\VkRender">
+      <UniqueIdentifier>{8949b079-2cf1-43e3-b50f-4e513011d3e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\QEngine\Debug">
+      <UniqueIdentifier>{7bf3d412-787e-4e2f-9f15-cf6938a9cb5a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VulkanRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Debug.cpp">
-      <Filter>Source Files\Debug</Filter>
+      <Filter>Source Files\QEngine\Debug</Filter>
     </ClCompile>
     <ClCompile Include="ThrowErr.cpp">
-      <Filter>Source Files\Debug</Filter>
+      <Filter>Source Files\QEngine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="VulkanRenderer.cpp">
+      <Filter>Source Files\QEngine\VkRender</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="VulkanRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="QEngine.h">
       <Filter>Header Files\QEngine</Filter>
     </ClInclude>
@@ -52,6 +55,15 @@
     </ClInclude>
     <ClInclude Include="Debug.h">
       <Filter>Header Files\QEngine\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="VulkanRenderer.h">
+      <Filter>Header Files\QEngine\VkRender</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files\QEngine\VkRender</Filter>
+    </ClInclude>
+    <ClInclude Include="VulkanValidation.h">
+      <Filter>Header Files\QEngine\VkRender</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
