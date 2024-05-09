@@ -134,10 +134,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Debug.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ThrowErr.cpp" />
     <ClCompile Include="VulkanRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Debug.h" />
+    <ClInclude Include="QEngine.h" />
+    <ClInclude Include="ThrowErr.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="VulkanRenderer.h" />
   </ItemGroup>

@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <vector>
 
+#include "QEngine.h"
 #include "VulkanRenderer.h"
 
 VulkanRenderer::VulkanRenderer(GLFWwindow* newWindow) : _window{newWindow} {
@@ -12,7 +13,8 @@ VulkanRenderer::VulkanRenderer(GLFWwindow* newWindow) : _window{newWindow} {
 		this->_createLogicalDevice();
 	}
 	catch (const std::runtime_error& e) {
-		printf("Renderer initialize error: %s\n", e.what());
+		std::string strErr = e.what();
+		Debug::print("Renderer initialize error: " + strErr);
 		this->_initResult = EXIT_FAILURE;
 		return;
 	}
@@ -38,7 +40,7 @@ void VulkanRenderer::_getPhysicalDevice() {
 	vkEnumeratePhysicalDevices(this->_instance, &deviceCount, nullptr);
 
 	if (deviceCount == 0) {
-		throw std::runtime_error("Cannot find any gpu's that support Vulkan Instance!..");
+		ThrowErr::runtime("Cannot find any gpu's that support Vulkan Instance!..");
 	}
 
 	std::vector<VkPhysicalDevice> deviceList(deviceCount);
@@ -75,7 +77,7 @@ void VulkanRenderer::_createInstance() {
 	}
 
 	if (!this->_checkInstanceExtensionsSupport(&instanceExtensions)) {
-		throw std::runtime_error("vkInstance does not support required extensions!..");
+		ThrowErr::runtime("vkInstance does not support required extensions!..");
 	}
 
 	createInfo.enabledExtensionCount = static_cast<uint32_t>(instanceExtensions.size());
@@ -86,7 +88,7 @@ void VulkanRenderer::_createInstance() {
 
 	VkResult result = vkCreateInstance(&createInfo, nullptr, &_instance);
 	if (result != VK_SUCCESS) {
-		throw std::runtime_error("Failed to create a Vulkan Instance!..");
+		ThrowErr::runtime("Failed to create a Vulkan Instance!..");
 	}
 }
 
@@ -112,7 +114,7 @@ void VulkanRenderer::_createLogicalDevice() {
 
 	VkResult result = vkCreateDevice(this->_mainDevice.physicalDevice, &deviceCreateInfo, nullptr, &this->_mainDevice.logicalDevice);
 	if (result != VK_SUCCESS) {
-		throw std::runtime_error("Failed to create a logical device!..");
+		ThrowErr::runtime("Failed to create a logical device!..");
 	}
 
 	vkGetDeviceQueue(this->_mainDevice.logicalDevice, indices.graphicsFamily, 0, &this->_graphicsQueue);
@@ -124,7 +126,7 @@ bool VulkanRenderer::_checkInstanceExtensionsSupport(std::vector<const char*>* c
 
 	std::vector<VkExtensionProperties> extensions(extensionsCount);
 	vkEnumerateInstanceExtensionProperties(nullptr, &extensionsCount, extensions.data());
-
+	
 	for (const char* &checkExtension: *checkExtensions) {
 		bool hasExtension = false;
 

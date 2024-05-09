@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\QEngine">
+      <UniqueIdentifier>{6e83e403-76e4-46de-acee-3ea39f1af22c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Debug">
+      <UniqueIdentifier>{7bf3d412-787e-4e2f-9f15-cf6938a9cb5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\QEngine\Debug">
+      <UniqueIdentifier>{7b79bea0-7a42-448e-9c4f-91c6167d5b72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,6 +30,12 @@
     <ClCompile Include="VulkanRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Source Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="ThrowErr.cpp">
+      <Filter>Source Files\Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VulkanRenderer.h">
@@ -28,6 +43,15 @@
     </ClInclude>
     <ClInclude Include="Utilities.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QEngine.h">
+      <Filter>Header Files\QEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ThrowErr.h">
+      <Filter>Header Files\QEngine\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Header Files\QEngine\Debug</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
