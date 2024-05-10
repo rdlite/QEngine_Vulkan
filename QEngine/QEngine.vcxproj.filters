@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Header Files\QEngine">
       <UniqueIdentifier>{6e83e403-76e4-46de-acee-3ea39f1af22c}</UniqueIdentifier>
     </Filter>
@@ -31,6 +27,18 @@
     <Filter Include="Source Files\QEngine\Debug">
       <UniqueIdentifier>{7bf3d412-787e-4e2f-9f15-cf6938a9cb5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{cc9c4cdc-2e4d-4c95-a918-3fd228d5f57b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\GLSL">
+      <UniqueIdentifier>{767a9f4b-5183-4bbf-bdd4-dac982ff51c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\GLSL\Test">
+      <UniqueIdentifier>{19c44bf3-c23d-44e1-bc17-35249d9f9e97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\QEngine\VkRender\Compilers">
+      <UniqueIdentifier>{7f8f95d0-1193-4140-9988-011695d78205}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -43,6 +51,9 @@
       <Filter>Source Files\QEngine\Debug</Filter>
     </ClCompile>
     <ClCompile Include="VulkanRenderer.cpp">
+      <Filter>Source Files\QEngine\VkRender</Filter>
+    </ClCompile>
+    <ClCompile Include="VulkanGraphicsPipeline.cpp">
       <Filter>Source Files\QEngine\VkRender</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,11 +70,25 @@
     <ClInclude Include="VulkanRenderer.h">
       <Filter>Header Files\QEngine\VkRender</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities.h">
+    <ClInclude Include="VulkanUtilities.h">
       <Filter>Header Files\QEngine\VkRender</Filter>
     </ClInclude>
     <ClInclude Include="VulkanValidation.h">
       <Filter>Header Files\QEngine\VkRender</Filter>
     </ClInclude>
+    <ClInclude Include="VulkanGraphicsPipeline.h">
+      <Filter>Header Files\QEngine\VkRender</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Shaders\test_shader.vert">
+      <Filter>Shaders\GLSL\Test</Filter>
+    </None>
+    <None Include="..\Shaders\test_shader.frag">
+      <Filter>Shaders\GLSL\Test</Filter>
+    </None>
+    <None Include="..\Shaders\SPIR-VGLSLCompiler.bat">
+      <Filter>Source Files\QEngine\VkRender\Compilers</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@ VulkanRenderer::VulkanRenderer(GLFWwindow* newWindow) : _window{newWindow} {
 		this->_getPhysicalDevice();
 		this->_createLogicalDevice();
 		this->_createSwapchain();
+		this->_createGraphicsPipeline();
 	}
 	catch (const std::runtime_error& e) {
 		std::string strErr = e.what();
@@ -236,6 +237,11 @@ void VulkanRenderer::_createSwapchain() {
 	}
 }
 
+void VulkanRenderer::_createGraphicsPipeline() {
+	VulkanGraphicsPipeline vkGraphicsPipeline = VulkanGraphicsPipeline(
+		this->_mainDevice.logicalDevice);
+}
+
 bool VulkanRenderer::_checkInstanceExtensionsSupport(std::vector<const char*>* checkExtensions) {
 	uint32_t extensionsCount = 0;
 	vkEnumerateInstanceExtensionProperties(nullptr, &extensionsCount, nullptr);
@@ -449,6 +455,7 @@ VkExtent2D VulkanRenderer::_chooseSwapExtent(const VkSurfaceCapabilitiesKHR& sur
 	else {
 		int width, height;
 		glfwGetFramebufferSize(this->_window, &width, &height);
+
 		VkExtent2D newExtent = {};
 		newExtent.width = static_cast<uint32_t>(width);
 		newExtent.height = static_cast<uint32_t>(height);

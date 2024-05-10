@@ -6,8 +6,9 @@
 #include <set>
 
 #include "QEngine.h"
-#include "Utilities.h"
+#include "VulkanUtilities.h"
 #include "VulkanValidation.h"
+#include "VulkanGraphicsPipeline.h"
 
 class VulkanRenderer {
 public:
@@ -47,6 +48,7 @@ private:
 	void _createLogicalDevice();
 	void _createSurface();
 	void _createSwapchain();
+	void _createGraphicsPipeline();
 	bool _checkInstanceExtensionsSupport(std::vector<const char*>* checkExtensions);
 	bool _checkDeviceSuitable(VkPhysicalDevice device);
 	bool _checkValidationLayerSupport();
