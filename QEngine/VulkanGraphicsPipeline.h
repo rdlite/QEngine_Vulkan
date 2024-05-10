@@ -1,11 +1,17 @@
 #pragma once
-#include "VulkanRenderer.h"
+#include "QEngine.h"
 
 class VulkanGraphicsPipeline {
 public:
-	VulkanGraphicsPipeline(VkDevice logicalDevice);
+	VulkanGraphicsPipeline(VkDevice logicalDevice, VkExtent2D swapchainExtent, VkFormat swapchainImageFormat);
 	~VulkanGraphicsPipeline();
 private:
+	VkPipeline _graphicsPipeline;
 	VkDevice _logicalDevice;
-	VkShaderModule _createShaderModule(const std::vector<char> &code);
+	VkPipelineLayout _pipelineLayout;
+	VkFormat _swapchainImageFormat;
+	VkRenderPass _renderPass;
+	
+	VkShaderModule _createShaderModule(const std::vector<char>& code);
+	void _createRenderPass();
 };

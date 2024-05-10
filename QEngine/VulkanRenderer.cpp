@@ -21,6 +21,8 @@ VulkanRenderer::VulkanRenderer(GLFWwindow* newWindow) : _window{newWindow} {
 }
 
 VulkanRenderer::~VulkanRenderer() {
+	delete this->_graphicsPipeline;
+
 	for (auto image : this->_swapchainImages) {
 		vkDestroyImageView(this->_mainDevice.logicalDevice, image.imageView, nullptr);
 	}
@@ -238,8 +240,8 @@ void VulkanRenderer::_createSwapchain() {
 }
 
 void VulkanRenderer::_createGraphicsPipeline() {
-	VulkanGraphicsPipeline vkGraphicsPipeline = VulkanGraphicsPipeline(
-		this->_mainDevice.logicalDevice);
+	VulkanGraphicsPipeline graphicsPipeline = VulkanGraphicsPipeline(
+		this->_mainDevice.logicalDevice, this->_swapchainExtent, this->_swapchainImageFormat);
 }
 
 bool VulkanRenderer::_checkInstanceExtensionsSupport(std::vector<const char*>* checkExtensions) {

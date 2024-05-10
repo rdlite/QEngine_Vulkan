@@ -1,13 +1,7 @@
 #pragma once
-#include <vulkan/vulkan.h>
-#include <GLFW/glfw3.h>
-#include <stdexcept>
-#include <vector>
-#include <set>
-
 #include "QEngine.h"
-#include "VulkanUtilities.h"
 #include "VulkanValidation.h"
+#include "VulkanUtilities.h"
 #include "VulkanGraphicsPipeline.h"
 
 class VulkanRenderer {
@@ -27,6 +21,7 @@ private:
 	VkFormat _swapchainImageFormat;
 	VkExtent2D _swapchainExtent;
 	std::vector<SwapchainImage> _swapchainImages;
+	VulkanGraphicsPipeline* _graphicsPipeline = nullptr;
 
 #ifdef NDEBUG
 	const bool _enableValidationLayers = false;
