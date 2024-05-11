@@ -35,3 +35,7 @@ QEngine/x64
 QEngine/Debug/QEngine.tlog
 QEngine/Debug
 QEngine/QEngine/x64
+CodeSrc/.vs
+CodeSrc/Debug
+CodeSrc/QEngine/x64
+CodeSrc/x64/Debug
