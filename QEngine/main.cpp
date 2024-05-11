@@ -20,6 +20,7 @@ int main() {
 
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
+		vkRenderer->draw();
 	}
 
 	delete vkRenderer;

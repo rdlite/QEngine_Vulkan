@@ -11,6 +11,7 @@ class VulkanRenderer {
 public:
 	VulkanRenderer(GLFWwindow* newWindow);
 	~VulkanRenderer();
+	void draw();
 	int getInitResult();
 
 private:
@@ -43,6 +44,9 @@ private:
 		VkDevice logicalDevice = nullptr;
 	} _mainDevice;
 
+	VkSemaphore _imageAvailable;
+	VkSemaphore _renderFinished;
+
 	void _getPhysicalDevice();
 	void _createInstance();
 	void _setupDebugMessenger();
@@ -54,6 +58,7 @@ private:
 	void _createFramebuffers();
 	void _createGraphicsCommandPool();
 	void _createCommandBuffer();
+	void _createSynchronization();
 
 	void _recordCommands();
 

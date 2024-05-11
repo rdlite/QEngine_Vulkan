@@ -13,6 +13,7 @@ VulkanRenderer::VulkanRenderer(GLFWwindow* newWindow) : _window{newWindow} {
 		this->_createGraphicsCommandPool();
 		this->_createCommandBuffer();
 		this->_recordCommands();
+		this->_createSynchronization();
 	}
 	catch (const std::runtime_error& e) {
 		std::string strErr = e.what();
@@ -25,6 +26,9 @@ VulkanRenderer::VulkanRenderer(GLFWwindow* newWindow) : _window{newWindow} {
 }
 
 VulkanRenderer::~VulkanRenderer() {
+	vkDestroySemaphore(this->_mainDevice.logicalDevice, this->_renderFinished, nullptr);
+	vkDestroySemaphore(this->_mainDevice.logicalDevice, this->_imageAvailable, nullptr);
+
 	delete this->_commandBuffer;
 	delete this->_graphicsCommandPool;
 	delete this->_framebuffer;
@@ -43,6 +47,51 @@ VulkanRenderer::~VulkanRenderer() {
 	vkDestroySurfaceKHR(this->_instance, this->_surface, nullptr);
 	vkDestroyDevice(this->_mainDevice.logicalDevice, nullptr);
 	vkDestroyInstance(this->_instance, nullptr);
+}
+
+void VulkanRenderer::draw() {
+	uint32_t imageIndex;
+
+	vkAcquireNextImageKHR(
+		this->_mainDevice.logicalDevice, 
+		this->_swapchain, 
+		std::numeric_limits<uint64_t>::max(), 
+		this->_imageAvailable, 
+		VK_NULL_HANDLE, 
+		&imageIndex);
+
+	VkSubmitInfo submitInfo = {};
+	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+	submitInfo.waitSemaphoreCount = 1;
+	submitInfo.pWaitSemaphores = &this->_imageAvailable;
+	VkPipelineStageFlags waitStages[] = {
+		VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
+	};
+
+	auto constBuffs = this->_commandBuffer->getCommandBuffers();
+	submitInfo.pWaitDstStageMask = waitStages;
+	submitInfo.commandBufferCount = 1;
+	submitInfo.pCommandBuffers = &constBuffs[imageIndex];
+	submitInfo.signalSemaphoreCount = 1;
+	submitInfo.pSignalSemaphores = &this->_renderFinished;
+
+	VkResult result = vkQueueSubmit(this->_graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE);
+	if (result != VK_SUCCESS) {
+		ThrowErr::runtime("Failed to submit command buffer to render queue!..");
+	}
+
+	VkPresentInfoKHR presentInfo = {};
+	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+	presentInfo.waitSemaphoreCount = 1;
+	presentInfo.pWaitSemaphores = &this->_renderFinished;
+	presentInfo.swapchainCount = 1;
+	presentInfo.pSwapchains = &this->_swapchain;
+	presentInfo.pImageIndices = &imageIndex;
+
+	result = vkQueuePresentKHR(this->_presentationQueue, &presentInfo);
+	if (result != VK_SUCCESS) {
+		ThrowErr::runtime("Failed to present Image!..");
+	}
 }
 
 int VulkanRenderer::getInitResult() {
@@ -484,6 +533,19 @@ VkImageView VulkanRenderer::_createImageView(VkImage image, VkFormat format, VkI
 	}
 
 	return imageView;
+}
+
+void VulkanRenderer::_createSynchronization() {
+	VkSemaphoreCreateInfo semaphoreCreateInfo = {};
+	semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+
+	if (vkCreateSemaphore(this->_mainDevice.logicalDevice, &semaphoreCreateInfo, nullptr, &this->_imageAvailable) != VK_SUCCESS) {
+		ThrowErr::runtime("Failed to create a image available semaphore!..");
+	}
+
+	if (vkCreateSemaphore(this->_mainDevice.logicalDevice, &semaphoreCreateInfo, nullptr, &this->_renderFinished) != VK_SUCCESS) {
+		ThrowErr::runtime("Failed to create a render semaphore!..");
+	}
 }
 
 VkSurfaceFormatKHR VulkanRenderer::_chooseSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& formats) {
