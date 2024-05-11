@@ -15,6 +15,8 @@ public:
 	int getInitResult();
 
 private:
+	int _currentFrame = 0;
+
 	GLFWwindow* _window = nullptr;
 	VkInstance _instance = nullptr;
 	VkQueue _graphicsQueue = nullptr;
@@ -44,8 +46,9 @@ private:
 		VkDevice logicalDevice = nullptr;
 	} _mainDevice;
 
-	VkSemaphore _imageAvailable;
-	VkSemaphore _renderFinished;
+	std::vector<VkSemaphore> _imagesAvailable;
+	std::vector<VkSemaphore> _rendersFinished;
+	std::vector<VkFence> _drawFences;
 
 	void _getPhysicalDevice();
 	void _createInstance();
