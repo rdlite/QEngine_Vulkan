@@ -51,6 +51,18 @@
     <Filter Include="Source Files\QEngine\VkRender\Buffers">
       <UniqueIdentifier>{00361a38-7fb5-4e4a-9f21-08ec0e5d1e12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\QEngine\Compilers">
+      <UniqueIdentifier>{20fa7a84-0d81-4a04-a675-4186b26d8daa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Executors">
+      <UniqueIdentifier>{6f152cb6-f2c6-40f8-8263-5e6037dbc5a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\QEngine\Utilities">
+      <UniqueIdentifier>{e3421c36-dc59-4f13-8e1a-1c6580500532}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\QEngine\Utilities">
+      <UniqueIdentifier>{ee1f4e45-5b80-4455-a22e-49f1f14c61f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -76,6 +88,12 @@
     </ClCompile>
     <ClCompile Include="VulkanCommandBuffer.cpp">
       <Filter>Source Files\QEngine\VkRender\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderCompiler.cpp">
+      <Filter>Source Files\QEngine\Compilers</Filter>
+    </ClCompile>
+    <ClCompile Include="QString.cpp">
+      <Filter>Source Files\QEngine\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +127,12 @@
     <ClInclude Include="VulkanCommandBuffer.h">
       <Filter>Header Files\QEngine\VkRender\Buffers</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderCompiler.h">
+      <Filter>Header Files\QEngine\Compilers</Filter>
+    </ClInclude>
+    <ClInclude Include="QString.h">
+      <Filter>Header Files\QEngine\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shaders\test_shader.vert">
@@ -117,8 +141,8 @@
     <None Include="..\Shaders\test_shader.frag">
       <Filter>Shaders\GLSL\Test</Filter>
     </None>
-    <None Include="..\Shaders\SPIR-VGLSLCompiler.bat">
-      <Filter>Source Files\QEngine\Compilers</Filter>
+    <None Include="..\Libs\Executors\SPIR-VGLSLCompiler.bat">
+      <Filter>Executors</Filter>
     </None>
   </ItemGroup>
 </Project>

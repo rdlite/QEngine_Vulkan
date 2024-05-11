@@ -4,11 +4,8 @@ VulkanGraphicsPipeline::VulkanGraphicsPipeline(
 	VkDevice logicalDevice, VkExtent2D swapchainExtent, VkFormat swapchainImageFormat) : _logicalDevice{ logicalDevice }, _swapchainImageFormat{ swapchainImageFormat } {
 	this->_createRenderPass();
 
-	std::vector<char> vertexShaderCode = readFile("D:/GitRepos/QEngine_Vulkan/Shaders/vert.spv");
-	std::vector<char> fragmentShaderCode = readFile("D:/GitRepos/QEngine_Vulkan/Shaders/frag.spv");
-
-	VkShaderModule vertexShaderModule = this->_createShaderModule(vertexShaderCode);
-	VkShaderModule fragmentShaderModule = this->_createShaderModule(fragmentShaderCode);
+	VkShaderModule vertexShaderModule = ShaderCompiler::VkCompileVertShaderGLSL(this->_logicalDevice, "C:/Users/rdlit/QEngine/Shaders/test_shader.vert");
+	VkShaderModule fragmentShaderModule = ShaderCompiler::VkCompileFragShaderGLSL(this->_logicalDevice, "C:/Users/rdlit/QEngine/Shaders/test_shader.frag");
 
 	VkPipelineShaderStageCreateInfo vertexShaderCreateInfo = {};
 	vertexShaderCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;

@@ -1,4 +1,5 @@
 #include "QEngine.h"
+#include "windows.h"
 #include "VulkanRenderer.h"
 
 GLFWwindow* initWindow(std::string wName = "Test window", const int width = 800, const int height = 600) {
@@ -11,6 +12,8 @@ GLFWwindow* initWindow(std::string wName = "Test window", const int width = 800,
 }
 
 int main() {
+	ShowWindow(GetConsoleWindow(), SW_HIDE);
+
 	GLFWwindow* window = initWindow();
 	VulkanRenderer* vkRenderer = new VulkanRenderer(window);
 

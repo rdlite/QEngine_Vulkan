@@ -9,6 +9,11 @@
 
 #include "Debug.h"
 #include "ThrowErr.h"
+#include "ShaderCompiler.h"
+#include "QString.h"
+
+const std::string SPIRV_GLSL_SHADER_COMPILER_BATCH_PATH = "C:/Users/rdlit/QEngine/Libs/Executors/SPIR-VGLSLCompiler.bat";
+const std::string SPV_GLSL_SHADERS_OUTPUT_PATH = "C:/Users/rdlit/QEngine/Shaders/temp/";
 
 static std::vector<char> readFile(const std::string& filename) {
 	std::ifstream file(filename, std::ios::binary | std::ios::ate);

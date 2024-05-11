@@ -1,5 +1,6 @@
 #pragma once
 #include "QEngine.h"
+#include "ShaderCompiler.h"
 
 class VulkanGraphicsPipeline {
 public:

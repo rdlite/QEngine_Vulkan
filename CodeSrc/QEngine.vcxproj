@@ -135,6 +135,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="QString.cpp" />
+    <ClCompile Include="ShaderCompiler.cpp" />
     <ClCompile Include="VulkanCommandBuffer.cpp" />
     <ClCompile Include="VulkanGraphicsCommandPool.cpp" />
     <ClCompile Include="main.cpp" />
@@ -145,6 +147,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="QString.h" />
+    <ClInclude Include="ShaderCompiler.h" />
     <ClInclude Include="VulkanCommandBuffer.h" />
     <ClInclude Include="VulkanGraphicsCommandPool.h" />
     <ClInclude Include="QEngine.h" />
@@ -156,7 +160,7 @@
     <ClInclude Include="VulkanValidation.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Shaders\SPIR-VGLSLCompiler.bat" />
+    <None Include="..\Libs\Executors\SPIR-VGLSLCompiler.bat" />
     <None Include="..\Shaders\test_shader.frag" />
     <None Include="..\Shaders\test_shader.vert" />
   </ItemGroup>
