@@ -5,6 +5,8 @@ class VulkanGraphicsPipeline {
 public:
 	VulkanGraphicsPipeline(VkDevice logicalDevice, VkExtent2D swapchainExtent, VkFormat swapchainImageFormat);
 	~VulkanGraphicsPipeline();
+	VkRenderPass getRenderPass();
+	VkPipeline getPipeline();
 private:
 	VkPipeline _graphicsPipeline;
 	VkDevice _logicalDevice;

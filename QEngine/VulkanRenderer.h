@@ -3,6 +3,9 @@
 #include "VulkanValidation.h"
 #include "VulkanUtilities.h"
 #include "VulkanGraphicsPipeline.h"
+#include "VulkanFrameBuffer.h"
+#include "VulkanCommandBuffer.h"
+#include "VulkanGraphicsCommandPool.h"
 
 class VulkanRenderer {
 public:
@@ -20,8 +23,12 @@ private:
 	VkSwapchainKHR _swapchain = nullptr;
 	VkFormat _swapchainImageFormat;
 	VkExtent2D _swapchainExtent;
-	std::vector<SwapchainImage> _swapchainImages;
 	VulkanGraphicsPipeline* _graphicsPipeline = nullptr;
+	VulkanFrameBuffer* _framebuffer = nullptr;
+	VulkanGraphicsCommandPool* _graphicsCommandPool = nullptr;
+	VulkanCommandBuffer* _commandBuffer = nullptr;
+
+	std::vector<SwapchainImage> _swapchainImages;
 
 #ifdef NDEBUG
 	const bool _enableValidationLayers = false;
@@ -44,6 +51,12 @@ private:
 	void _createSurface();
 	void _createSwapchain();
 	void _createGraphicsPipeline();
+	void _createFramebuffers();
+	void _createGraphicsCommandPool();
+	void _createCommandBuffer();
+
+	void _recordCommands();
+
 	bool _checkInstanceExtensionsSupport(std::vector<const char*>* checkExtensions);
 	bool _checkDeviceSuitable(VkPhysicalDevice device);
 	bool _checkValidationLayerSupport();
@@ -53,7 +66,7 @@ private:
 	std::vector<const char*> _getRequiredExtensions();
 	SwapchainDetails _getSwapchainDetails(VkPhysicalDevice device);
 	VkImageView _createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags);
-
+	
 	VkSurfaceFormatKHR _chooseSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &formats);
 	VkPresentModeKHR _choosePresentMode(const std::vector<VkPresentModeKHR> &presentationMods);
 	VkExtent2D _chooseSwapExtent(const VkSurfaceCapabilitiesKHR &surfaceCapabilities);

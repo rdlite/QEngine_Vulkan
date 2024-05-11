@@ -9,6 +9,10 @@ VulkanRenderer::VulkanRenderer(GLFWwindow* newWindow) : _window{newWindow} {
 		this->_createLogicalDevice();
 		this->_createSwapchain();
 		this->_createGraphicsPipeline();
+		this->_createFramebuffers();
+		this->_createGraphicsCommandPool();
+		this->_createCommandBuffer();
+		this->_recordCommands();
 	}
 	catch (const std::runtime_error& e) {
 		std::string strErr = e.what();
@@ -21,6 +25,9 @@ VulkanRenderer::VulkanRenderer(GLFWwindow* newWindow) : _window{newWindow} {
 }
 
 VulkanRenderer::~VulkanRenderer() {
+	delete this->_commandBuffer;
+	delete this->_graphicsCommandPool;
+	delete this->_framebuffer;
 	delete this->_graphicsPipeline;
 
 	for (auto image : this->_swapchainImages) {
@@ -240,8 +247,19 @@ void VulkanRenderer::_createSwapchain() {
 }
 
 void VulkanRenderer::_createGraphicsPipeline() {
-	VulkanGraphicsPipeline graphicsPipeline = VulkanGraphicsPipeline(
+	this->_graphicsPipeline = new VulkanGraphicsPipeline(
 		this->_mainDevice.logicalDevice, this->_swapchainExtent, this->_swapchainImageFormat);
+}
+
+void VulkanRenderer::_createFramebuffers() {
+	this->_framebuffer = new VulkanFrameBuffer(
+		this->_swapchainImages, this->_graphicsPipeline->getRenderPass(), this->_swapchainExtent,
+		this->_mainDevice.logicalDevice);
+}
+
+void VulkanRenderer::_createCommandBuffer() {
+	this->_commandBuffer = new VulkanCommandBuffer(
+		this->_mainDevice.logicalDevice, this->_swapchainImages, this->_graphicsCommandPool);
 }
 
 bool VulkanRenderer::_checkInstanceExtensionsSupport(std::vector<const char*>* checkExtensions) {
@@ -363,6 +381,48 @@ QueueFamilyIndicies VulkanRenderer::_getQueueFamilies(VkPhysicalDevice device) {
 	}
 
 	return indicies;
+}
+
+void VulkanRenderer::_recordCommands() {
+	VkCommandBufferBeginInfo bufferBeginInfo = {};
+	bufferBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+	bufferBeginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
+	
+	VkRenderPassBeginInfo renderPassBeginInfo = {};
+	renderPassBeginInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+	renderPassBeginInfo.renderArea.offset = { 0, 0 };
+	renderPassBeginInfo.renderArea.extent = this->_swapchainExtent;
+	VkClearValue clearValue[] = {
+		{0.6f, 0.65f, 0.4f, 1.0f}
+	};
+	renderPassBeginInfo.pClearValues = clearValue;
+	renderPassBeginInfo.renderPass = this->_graphicsPipeline->getRenderPass();
+	renderPassBeginInfo.clearValueCount = 1;
+
+	for (size_t i = 0; i < this->_commandBuffer->getCommandBuffers().size(); i++) {
+		VkCommandBuffer cb = this->_commandBuffer->getCommandBuffers()[i];
+
+		renderPassBeginInfo.framebuffer = this->_framebuffer->getSwapchainFramebuffers()[i];
+
+		VkResult result = vkBeginCommandBuffer(cb, &bufferBeginInfo);
+		if (result != VK_SUCCESS) {
+			ThrowErr::runtime("Failed to start recording a command buffer!..");
+		}
+
+		vkCmdBeginRenderPass(cb, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+		vkCmdBindPipeline(cb, VK_PIPELINE_BIND_POINT_GRAPHICS, this->_graphicsPipeline->getPipeline());
+		vkCmdDraw(cb, 3, 1, 0, 0);
+		vkCmdEndRenderPass(cb);
+
+		result = vkEndCommandBuffer(cb);
+		if (result != VK_SUCCESS) {
+			ThrowErr::runtime("Failed to stop recording a command buffer!..");
+		}
+	}
+}
+
+void VulkanRenderer::_createGraphicsCommandPool() {
+	this->_graphicsCommandPool = new VulkanGraphicsCommandPool(this->_mainDevice.logicalDevice, this->_getQueueFamilies(this->_mainDevice.physicalDevice));
 }
 
 std::vector<const char*> VulkanRenderer::_getRequiredExtensions() {

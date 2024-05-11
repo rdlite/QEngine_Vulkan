@@ -36,8 +36,20 @@
     <Filter Include="Shaders\GLSL\Test">
       <UniqueIdentifier>{19c44bf3-c23d-44e1-bc17-35249d9f9e97}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\QEngine\VkRender\Compilers">
+    <Filter Include="Source Files\QEngine\Compilers">
       <UniqueIdentifier>{7f8f95d0-1193-4140-9988-011695d78205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\QEngine\VkRender\Pools">
+      <UniqueIdentifier>{9cf9418a-0080-4c4f-b8de-edca775f0985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\QEngine\VkRender\Pools">
+      <UniqueIdentifier>{888cd865-c799-4a39-98aa-a6e86c844e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\QEngine\VkRender\Buffers">
+      <UniqueIdentifier>{a2925e9e-772d-4915-a5a2-c3850fdd4382}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\QEngine\VkRender\Buffers">
+      <UniqueIdentifier>{00361a38-7fb5-4e4a-9f21-08ec0e5d1e12}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +67,15 @@
     </ClCompile>
     <ClCompile Include="VulkanGraphicsPipeline.cpp">
       <Filter>Source Files\QEngine\VkRender</Filter>
+    </ClCompile>
+    <ClCompile Include="VulkanGraphicsCommandPool.cpp">
+      <Filter>Source Files\QEngine\VkRender\Pools</Filter>
+    </ClCompile>
+    <ClCompile Include="VulkanFrameBuffer.cpp">
+      <Filter>Source Files\QEngine\VkRender\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="VulkanCommandBuffer.cpp">
+      <Filter>Source Files\QEngine\VkRender\Buffers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +100,15 @@
     <ClInclude Include="VulkanGraphicsPipeline.h">
       <Filter>Header Files\QEngine\VkRender</Filter>
     </ClInclude>
+    <ClInclude Include="VulkanGraphicsCommandPool.h">
+      <Filter>Header Files\QEngine\VkRender\Pools</Filter>
+    </ClInclude>
+    <ClInclude Include="VulkanFrameBuffer.h">
+      <Filter>Header Files\QEngine\VkRender\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="VulkanCommandBuffer.h">
+      <Filter>Header Files\QEngine\VkRender\Buffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shaders\test_shader.vert">
@@ -88,7 +118,7 @@
       <Filter>Shaders\GLSL\Test</Filter>
     </None>
     <None Include="..\Shaders\SPIR-VGLSLCompiler.bat">
-      <Filter>Source Files\QEngine\VkRender\Compilers</Filter>
+      <Filter>Source Files\QEngine\Compilers</Filter>
     </None>
   </ItemGroup>
 </Project>

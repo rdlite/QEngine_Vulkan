@@ -135,15 +135,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="VulkanCommandBuffer.cpp" />
+    <ClCompile Include="VulkanGraphicsCommandPool.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ThrowErr.cpp" />
+    <ClCompile Include="VulkanFrameBuffer.cpp" />
     <ClCompile Include="VulkanGraphicsPipeline.cpp" />
     <ClCompile Include="VulkanRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="VulkanCommandBuffer.h" />
+    <ClInclude Include="VulkanGraphicsCommandPool.h" />
     <ClInclude Include="QEngine.h" />
     <ClInclude Include="ThrowErr.h" />
+    <ClInclude Include="VulkanFrameBuffer.h" />
     <ClInclude Include="VulkanGraphicsPipeline.h" />
     <ClInclude Include="VulkanUtilities.h" />
     <ClInclude Include="VulkanRenderer.h" />

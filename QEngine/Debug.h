@@ -6,6 +6,7 @@ public:
 	static void print(float data);
 	static void print(std::string data);
 	static void print(uint32_t data);
+	static void print(size_t data);
 	static void print(bool data);
 	static void print(double data);
 };

@@ -21,6 +21,10 @@ void Debug::print(uint32_t data) {
 	std::cout << data << std::endl;
 }
 
+void Debug::print(size_t data) {
+	std::cout << data << std::endl;
+}
+
 void Debug::print(bool data) {
 	std::cout << (data ? "true" : "false") << std::endl;
 }

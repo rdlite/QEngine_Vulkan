@@ -83,7 +83,7 @@ VulkanGraphicsPipeline::VulkanGraphicsPipeline(
 	colorBlendAttachmentState.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
 	colorBlendAttachmentState.blendEnable = VK_TRUE;
 
-	/// blending equation: (srcColorBlendFactor * newColor) colorBlendOp (dstColorBlendFactor * opColor)
+	// blending equation: (srcColorBlendFactor * newColor) colorBlendOp (dstColorBlendFactor * opColor)
 	colorBlendAttachmentState.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
 	colorBlendAttachmentState.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
 	colorBlendAttachmentState.colorBlendOp = VK_BLEND_OP_ADD;
@@ -118,7 +118,8 @@ VulkanGraphicsPipeline::VulkanGraphicsPipeline(
 	graphicsPipelineCreateInfo.pVertexInputState = &vectexInputCreateInfo;
 	graphicsPipelineCreateInfo.pInputAssemblyState = &inputAssemblyCreateInfo;
 	graphicsPipelineCreateInfo.pViewportState = &viewportStateCreateInfo;
-	graphicsPipelineCreateInfo.pDynamicState = &dynamicStateCreateInfo;
+	//graphicsPipelineCreateInfo.pDynamicState = &dynamicStateCreateInfo;
+	graphicsPipelineCreateInfo.pDynamicState = nullptr;
 	graphicsPipelineCreateInfo.pRasterizationState = &rasterizerCreateInfo;
 	graphicsPipelineCreateInfo.pMultisampleState = &multisamplingCreateInfo;
 	graphicsPipelineCreateInfo.pColorBlendState = &colorBlendingCreateInfo;
@@ -150,6 +151,14 @@ VulkanGraphicsPipeline::~VulkanGraphicsPipeline() {
 	vkDestroyPipeline(this->_logicalDevice, this->_graphicsPipeline, nullptr);
 	vkDestroyPipelineLayout(this->_logicalDevice, this->_pipelineLayout, nullptr);
 	vkDestroyRenderPass(this->_logicalDevice, this->_renderPass, nullptr);
+}
+
+VkRenderPass VulkanGraphicsPipeline::getRenderPass() {
+	return this->_renderPass;
+}
+
+VkPipeline VulkanGraphicsPipeline::getPipeline() {
+	return this->_graphicsPipeline;
 }
 
 VkShaderModule VulkanGraphicsPipeline::_createShaderModule(const std::vector<char>& code) {
@@ -187,7 +196,7 @@ void VulkanGraphicsPipeline::_createRenderPass() {
 	subpass.colorAttachmentCount = 1;
 	subpass.pColorAttachments = &colorAttachmentReference;
 
-	std::array<VkSubpassDependency, 2> subpassDependencies;
+	std::array<VkSubpassDependency, 2> subpassDependencies = {};
 	subpassDependencies[0].srcSubpass = VK_SUBPASS_EXTERNAL;
 	subpassDependencies[0].srcStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
 	subpassDependencies[0].srcAccessMask = VK_ACCESS_MEMORY_READ_BIT;
