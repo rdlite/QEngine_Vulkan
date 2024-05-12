@@ -67,6 +67,7 @@ private:
 
 	bool _checkInstanceExtensionsSupport(std::vector<const char*>* checkExtensions);
 	bool _checkDeviceSuitable(VkPhysicalDevice device);
+	int _rateDeviceSuitability(VkPhysicalDevice device);
 	bool _checkValidationLayerSupport();
 	bool _checkDeviceExtensionSupport(VkPhysicalDevice device);
 

@@ -123,10 +123,13 @@ void VulkanRenderer::_getPhysicalDevice() {
 	std::vector<VkPhysicalDevice> deviceList(deviceCount);
 	vkEnumeratePhysicalDevices(this->_instance, &deviceCount, deviceList.data());
 
+	int maxDeviceScore = -1;
 	for (VkPhysicalDevice& device : deviceList) {
-		if (this->_checkDeviceSuitable(device)) {
+		int score = _rateDeviceSuitability(device);
+
+		if (maxDeviceScore < score && this->_checkDeviceSuitable(device)) {
+			maxDeviceScore = score;
 			this->_mainDevice.physicalDevice = device;
-			break;
 		}
 	}
 }
@@ -258,7 +261,6 @@ void VulkanRenderer::_createSwapchain() {
 	swapchainCreateInfo.surface = this->_surface;
 	swapchainCreateInfo.imageFormat = surfaceFormat.format;
 	swapchainCreateInfo.imageColorSpace = surfaceFormat.colorSpace;
-	swapchainCreateInfo.presentMode = presentMode;
 	swapchainCreateInfo.imageExtent = resolution;
 	swapchainCreateInfo.minImageCount = imageCount;
 	swapchainCreateInfo.imageArrayLayers = 1;
@@ -266,6 +268,7 @@ void VulkanRenderer::_createSwapchain() {
 	swapchainCreateInfo.preTransform = swapchainDetails.surfaceCapabilities.currentTransform;
 	swapchainCreateInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
 	swapchainCreateInfo.clipped = VK_TRUE;
+	swapchainCreateInfo.presentMode = presentMode;
 
 	QueueFamilyIndicies indices = this->_getQueueFamilies(this->_mainDevice.physicalDevice);
 	if (indices.graphicsFamily != indices.presentationFamily) {
@@ -358,6 +361,27 @@ bool VulkanRenderer::_checkDeviceSuitable(VkPhysicalDevice device) {
 	bool swapchainValid = !scDetails.presentationModes.empty() && !scDetails.formats.empty();
 
 	return indices.isValid() && extensionsSupported && swapchainValid;
+}
+
+int VulkanRenderer::_rateDeviceSuitability(VkPhysicalDevice device) {
+	VkPhysicalDeviceProperties deviceProperties;
+	vkGetPhysicalDeviceProperties(device, &deviceProperties);
+	VkPhysicalDeviceFeatures deviceFeatures;
+	vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
+
+	int score = 0;
+
+	if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU) {
+		score += 1000;
+	}
+
+	score += deviceProperties.limits.maxImageDimension2D;
+
+	if (!deviceFeatures.geometryShader) {
+		return 0;
+	}
+
+	return score;
 }
 
 bool VulkanRenderer::_checkValidationLayerSupport() {
@@ -456,7 +480,7 @@ void VulkanRenderer::_recordCommands() {
 	renderPassBeginInfo.renderArea.offset = { 0, 0 };
 	renderPassBeginInfo.renderArea.extent = this->_swapchainExtent;
 	VkClearValue clearValue[] = {
-		{0.6f, 0.65f, 0.4f, 1.0f}
+		{0.0f, 0.0f, 0.0f, 1.0f}
 	};
 	renderPassBeginInfo.pClearValues = clearValue;
 	renderPassBeginInfo.renderPass = this->_graphicsPipeline->getRenderPass();
